@@ -1,0 +1,54 @@
+@import url('https://fonts.googleapis.com/css2?family=Playwrite+IT+Moderna:wght@100..400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap');
+
+*{
+  margin: 0px;
+  padding: 0px;
+  box-sizing: border-box;
+}
+
+.navbar{
+    font-family: 'Playwrite IT Moderna', sans-serif;
+    color: #fff;
+    padding: 1rem;
+    text-align: center;
+}
+
+#searchbar{
+    font-family: 'Lato';
+    font-size: 1.2rem;
+    
+}
+
+/* #card-image{
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+} */
+#card-image img{
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
+}
+
+.custom-btn {
+    border-radius: 30px; /* Rounded corners */
+    padding: 10px 20px; /* Increased padding */
+    font-size: 16px; /* Larger font size */
+    transition: all 0.3s ease; /* Smooth transition for effects */
+    border: none; /* Remove default border */
+  }
+
+  .custom-btn:hover {
+    transform: translateY(-2px); /* Lift the button on hover */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Add shadow on hover */
+  }
+
+  .btn-primary.custom-btn {
+    background: linear-gradient(45deg, #007bff, #5f80e1); /* Gradient for primary button */
+  }
+
+  .btn-danger.custom-btn {
+    background: linear-gradient(45deg, #dc3545, #f46c6c); /* Gradient for danger button */
+  }
+  
