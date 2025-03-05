@@ -13,3 +13,21 @@ export const uploadData = async (contactDetail)=>{
 export const displayAllContact = async ()=>{
     return await commonAPI("get","/contacts","")
 }
+
+//for viewing the contact data on view page
+
+export const viewContact = async (id)=>{
+    return await commonAPI("get",`/contacts/${id}`,"")
+}
+
+//delete cheyaan ulla api
+
+export const deleteContactDetails = async(id)=>{
+    return await commonAPI("delete",`/contacts/${id}`,{})
+}
+
+//update cheyaan ulla api call
+
+export const updatingContact=async(id,updatedData)=>{
+    return await commonAPI("patch",`/contacts/${id}`,updatedData)
+}

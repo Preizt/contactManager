@@ -1,7 +1,66 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, {  useEffect, useState } from "react";
+import { Link, useNavigate} from "react-router-dom";
+import { updatingContact, viewContact } from "../services/allAPI";
+import { toast } from "react-toastify";
+
 
 const EditContact = () => {
+  const [data, setData] = useState({});
+
+  const navigate = useNavigate();
+
+  const [editData, setEditData] = useState({
+    name: "",
+    photoUrl: "",
+    mobile: "",
+    email: "",
+    company: "",
+    title: "",
+  });
+
+  // console.log(editData);
+  const contactID = localStorage.getItem("editId");
+  // console.log(contactID);
+
+  const editContactDetails = async () => {
+    let res = await viewContact(contactID);
+    setData(res.data);
+
+    // console.log(contactID);
+  };
+
+  const load = () => {
+    setEditData({
+      name: data.name || "",
+      photoUrl: data.photoUrl || "",
+      mobile: data.mobile || "",
+      email: data.email || "",
+      company: data.company || "",
+      title: data.title || "",
+    });
+  };
+
+  // console.log(editData);
+
+  useEffect(() => {
+    editContactDetails();
+  }, []);
+
+  useEffect(() => {
+    load();
+  }, [data]);
+
+  const updateContact = async (e) => {
+    e.preventDefault();
+
+    
+    await updatingContact(contactID, editData);
+    toast.warning("Contact Updated");
+    navigate("/")
+    // alert("sdkghu")
+    
+  };
+
   return (
     <>
       <div className="container-fluid bg-light min-vh-100">
@@ -24,6 +83,10 @@ const EditContact = () => {
                       className="form-control custom-input"
                       id="name"
                       placeholder="Enter your name"
+                      value={editData.name}
+                      onChange={(e) =>
+                        setEditData({ ...editData, name: e.target.value })
+                      }
                     />
                   </div>
 
@@ -37,6 +100,10 @@ const EditContact = () => {
                       className="form-control custom-input"
                       id="photoUrl"
                       placeholder="Enter image URL"
+                      value={editData.photoUrl}
+                      onChange={(e) =>
+                        setEditData({ ...editData, photoUrl: e.target.value })
+                      }
                     />
                   </div>
 
@@ -50,6 +117,10 @@ const EditContact = () => {
                       className="form-control custom-input"
                       id="mobile"
                       placeholder="Enter your mobile number"
+                      value={editData.mobile}
+                      onChange={(e) =>
+                        setEditData({ ...editData, mobile: e.target.value })
+                      }
                     />
                   </div>
 
@@ -63,6 +134,10 @@ const EditContact = () => {
                       className="form-control custom-input"
                       id="email"
                       placeholder="Enter your email"
+                      value={editData.email}
+                      onChange={(e) =>
+                        setEditData({ ...editData, email: e.target.value })
+                      }
                     />
                   </div>
 
@@ -76,6 +151,10 @@ const EditContact = () => {
                       className="form-control custom-input"
                       id="company"
                       placeholder="Enter your company name"
+                      value={editData.company}
+                      onChange={(e) =>
+                        setEditData({ ...editData, company: e.target.value })
+                      }
                     />
                   </div>
 
@@ -89,6 +168,10 @@ const EditContact = () => {
                       className="form-control custom-input"
                       id="title"
                       placeholder="Enter your job title"
+                      value={editData.title}
+                      onChange={(e) =>
+                        setEditData({ ...editData, title: e.target.value })
+                      }
                     />
                   </div>
 
@@ -97,15 +180,27 @@ const EditContact = () => {
                     <button
                       type="submit"
                       className="btn btn-warning custom-btn"
+                      onClick={(e)=>updateContact(e)}
                     >
                       Update
                     </button>
                     <Link to="/">
-                      <button type="button" className="btn btn-dark custom-btn">
+                      <button
+                        type="button"
+                        className=" btn btn-dark custom-btn"
+                      >
                         Cancel
                       </button>
                     </Link>
                   </div>
+                  <Link to="/">
+                    <button
+                      type="button"
+                      className="btn btn-primary custom-btn w-100 mt-3"
+                    >
+                      Back
+                    </button>
+                  </Link>
                 </form>
               </div>
             </div>

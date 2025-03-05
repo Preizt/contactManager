@@ -1,8 +1,11 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { uploadData } from "../services/allAPI";
+import { toast, ToastContainer } from "react-toastify";
 
 const AddContact = () => {
+  const navigate = useNavigate();
+
   //by using the spread operator to alterante the object
   const [contact, setContact] = useState({
     name: "",
@@ -14,6 +17,7 @@ const AddContact = () => {
   });
 
   const createContact = async (e) => {
+    e.preventDefault();
     if (
       contact.name &&
       contact.photoUrl &&
@@ -23,13 +27,13 @@ const AddContact = () => {
       contact.title
     ) {
       // console.log("success");
-      // e.preventDefault();
 
       try {
         let response = await uploadData(contact);
-        console.log(response);
+        // console.log(response);
         if (response.status >= 200 && response.status <= 300) {
-          alert("Successfully saved your Contact");
+          // alert("Successfully saved your Contact");
+
           // status code check cheyath to let know if the data has been saved or not in the json server
           setContact({
             name: "",
@@ -39,6 +43,8 @@ const AddContact = () => {
             company: "",
             title: "",
           });
+          toast.success("Contact Created");
+          navigate("/");
           //to clear the input value after saving the data
         } else {
           alert("Error Occured , Please contact the ADMIN");
@@ -47,7 +53,7 @@ const AddContact = () => {
         alert("An error occurred");
       }
     } else {
-      alert("Enter the Full Details");
+      toast.warning("Fill all the Details");
     }
   };
 
@@ -200,6 +206,8 @@ const AddContact = () => {
     </>
   );
 };
+
+
 
 // Glassmorphism effect for modern UI
 const glassmorphismStyle = {

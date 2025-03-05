@@ -1,7 +1,29 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { viewContact } from "../services/allAPI";
+
 
 const ViewContact = () => {
+
+
+  const [viewSingleUser,setViewSingleUser] = useState({})
+
+  useEffect(()=>{
+    viewSingleUserContact()
+    //nammal view cheyunna time venam display cheyipikann , athin vendi aan useEffect use cheyunne , aa page load aghumbool display details display cheyanam.
+
+  },[])
+
+
+  // console.log("Hello",viewSingleUser);
+
+
+  const viewSingleUserContact =async ()=>{
+     const userId = sessionStorage.getItem("contactId")
+     const apiResponse = await viewContact(userId)
+    //  console.log(apiResponse.data);
+     setViewSingleUser(apiResponse.data)
+  }
 
   
 
@@ -14,27 +36,27 @@ const ViewContact = () => {
               {/* Contact Image */}
               <div id="card-image">
               <img
-                src="https://imgv3.fotor.com/images/blog-cover-image/10-profile-picture-ideas-to-make-you-stand-out.jpg"
+                src={viewSingleUser.photoUrl}
                 alt="Contact"
                 className="img-fluid rounded-5 mb-3"
                 
               />
               </div>
               
-              <h4 className="card-title">Preiztly Tennyson</h4>
-              <p className="text-muted">Software Engineer</p>
+              <h4 className="card-title">{viewSingleUser.name}</h4>
+              <p className="text-muted">{viewSingleUser.title}</p>
             </div>
 
             {/* Contact Details */}
             <div className="mt-4 text-center">
               <p>
-                <strong>Mobile:</strong> +91 9847396145
+                <strong>Mobile:</strong> {viewSingleUser.mobile}
               </p>
               <p>
-                <strong>Email:</strong> preiztyl.tennyson@gmail.com
+                <strong>Email:</strong> {viewSingleUser.email}
               </p>
               <p>
-                <strong>Company:</strong> Tech Innovators
+                <strong>Company:</strong> {viewSingleUser.company}
               </p>
               
             </div>
